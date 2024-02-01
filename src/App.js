@@ -3,8 +3,8 @@ import "./App.css";
 import TextForm from "./components/TextForm";
 import React, { useState } from "react";
 import Alert from "./components/Alert";
-import {BrowserRouter, Route, Routes,} from "react-router-dom";
-import About from "./components/About";
+// import {BrowserRouter, Route, Routes,} from "react-router-dom";
+// import About from "./components/About";
 
 //https://Sreedev-Github.github.io/TextUtils-React = use this if u want to host on git.. replace the homepage name in package.json to this
 
@@ -44,7 +44,8 @@ function App() {
   
 
   return (
-      <BrowserRouter basename="/">
+    <>
+      {/* // <BrowserRouter basename="/"> */}
         <Navbar
           title="Text Utils"
           placeholder="Search Here..."
@@ -54,12 +55,9 @@ function App() {
         />
         <Alert alert={alert} />
         <div className="container mt-3">
-          <Routes>
-            <Route path="/" element={<TextForm heading="Try TextUtils - Word Counter, Character Couonter, Text to Speech" mode={mode} showAlert={showAlert} btnColor={btnTheme} />} />
-            <Route path="/about" element={<About mode={mode}/>} />
-          </Routes>
+            <TextForm heading="Try TextUtils - Word Counter, Character Couonter, Text to Speech" mode={mode} showAlert={showAlert} btnColor={btnTheme} />
         </div>
-      </BrowserRouter>
+      </>
   );
 }
 
