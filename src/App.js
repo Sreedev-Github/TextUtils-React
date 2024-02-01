@@ -3,12 +3,14 @@ import "./App.css";
 import TextForm from "./components/TextForm";
 import React, { useState } from "react";
 import Alert from "./components/Alert";
-// import { BrowserRouter, Route, Routes,} from "react-router-dom";
-// import About from "./components/About";
+import {BrowserRouter, Route, Routes,} from "react-router-dom";
+import About from "./components/About";
+
+//https://Sreedev-Github.github.io/TextUtils-React = use this if u want to host on git.. replace the homepage name in package.json to this
 
 function App() {
   const [mode, setMode] = useState("light"); // Wheather dark mode is enabled or not
-  const [toggleText, setText] = useState("Enable Dark Mode"); // Wheather dark mode is enabled or not
+  const [toggleText, setText] = useState("Light Mode"); // Wheather dark mode is enabled or not
   const [alert, setAlert] = useState(null);
   const [btnTheme, setBtnTheme] = useState("primary");
   // We are converting Alert into an object so that we can use multiple values for it
@@ -22,66 +24,42 @@ function App() {
     }, 1500);
   };
 
-  const removeBodyClass = () => {
-    document.body.classList.remove("bg-success");
-    document.body.classList.remove("bg-light");
-    document.body.classList.remove("bg-dark");
-    document.body.classList.remove("bg-primary");
-  };
-
-  const toggleMode = (cls) => {
-    removeBodyClass();
-    document.body.classList.add("bg-" + cls);
-    if (document.body.classList.contains("bg-primary")) {
-      setBtnTheme("light");
-      showAlert("Blue theme has been enabled", "success");
-      document.title = "TextUtils - Blue Theme";
-    } else if (document.body.classList.contains("bg-success")) {
-      showAlert("Green theme has been enabled", "success");
-      setBtnTheme("light");
-      document.title = "TextUtils - Green Theme";
-    }
-
-    let toggleBtn = document.getElementById("flexSwitchCheckDefault");
-    toggleBtn.addEventListener("click", () => {
+  const toggleMode = () => {
       if (mode === "light") {
         setMode("dark");
-        setText("Enable Light Mode");
+        setText("Dark Mode");
         document.body.style.backgroundColor = "#1d1c26";
         showAlert("Dark mode has been enabled", "success");
         setBtnTheme("primary");
         document.title = "TextUtils - Dark Mode";
-      } else if (mode === "dark") {
+      } else if(mode === "dark") {
         setMode("light");
-        setText("Enable Dark Mode");
+        setText("Light Mode");
         document.body.style.backgroundColor = "white";
         showAlert("Light mode has been enabled", "success");
         setBtnTheme("primary");
         document.title = "TextUtils - Light Mode";
       }
-    });
-  };
+    };
+  
 
   return (
-    <>
-      {/* <BrowserRouter> */}
-        {/* Props are some variables which we pass in the actual component so that we can reuse them and change the data or whatever we have used it for later when required.*/}
+      <BrowserRouter basename="/">
         <Navbar
           title="Text Utils"
-          placeholder="Searh Here..."
+          placeholder="Search Here..."
           mode={mode}
           toggleMode={toggleMode}
           btnText={toggleText}
         />
         <Alert alert={alert} />
         <div className="container mt-3">
-          {/* <Routes> */}
-          {/* <Route exact path="/about" element={<About />}> </Route> */}
-         {<TextForm heading="Enter text to analyze"  mode={mode} showAlert={showAlert} btnColor={btnTheme}/>}
-          {/* </Routes> */}
+          <Routes>
+            <Route path="/" element={<TextForm heading="Try TextUtils - Word Counter, Character Couonter, Text to Speech" mode={mode} showAlert={showAlert} btnColor={btnTheme} />} />
+            <Route path="/about" element={<About mode={mode}/>} />
+          </Routes>
         </div>
-      {/* </BrowserRouter> */}
-    </>
+      </BrowserRouter>
   );
 }
 
@@ -102,3 +80,5 @@ export default App;
 // You will be closing it like this <img src={logo} className="App-logo" alt="logo" />
 
 // Bebel is used to compiles the JSX down to React.createElement
+
+//Props are some variables which we pass in the actual component so that we can reuse them and change the data or whatever we have used it for later when required.

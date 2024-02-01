@@ -49,35 +49,33 @@ export default function TextForm(props) {
         props.showAlert("All punctuations has been removed!", "success")
     }
 
-    const [text, setText] = useState('');
+    
 
-    const wordCounter =()=>{
-        let str = text.split(" ");
-        return str.length-1
-        
-    }
+    const [text, setText] = useState('');
+    // text = "new text"; // Wrong way to change the state
+    // setText("new text"); // Correct way to change the state
 
   return (
     <>
     <div className='container' style={{color: props.mode==='light'?'black':'white'}}>
-        <h1>{props.heading}</h1>
+        <h1 className='mb-4'>{props.heading}</h1>
       <form className='mt-3 mb-3'>
         {/* We need to use OnChange event so that we are able to edit the text inside as we are already giving it a const value */}
     <textarea value={text} onChange={handleOnChange} className="form-control" style={{backgroundColor: props.mode==='light'?'white':'#0c0c0c', color: props.mode==='light'?'black':'white'}} id="exampleFormControlTextarea1" rows="10"></textarea>
     </form>
-    <button className={`btn btn-${props.btnColor} mx-1`} onClick={handleUpClick}>Convert to Uppercase</button>
-    <button className={`btn btn-${props.btnColor} mx-1`} onClick={handleLowClick}>Convert to Lowercase</button>
-    <button className={`btn btn-${props.btnColor} mx-1`} onClick={handleSpeakClick}>Read Text</button>
-    <button className={`btn btn-${props.btnColor} mx-1`} onClick={handleRemovePunctuationClick}>Remove Punctuations</button>
-    <button className={`btn btn-${props.btnColor} mx-1`} onClick={handleCopy}>Copy Text</button>
-    <button className={`btn btn-${props.btnColor} mx-1`} onClick={handleClear}>Clear Text</button>
+    <button disabled={text.length ===0} className={`btn btn-${props.btnColor} mx-1 my-1`} onClick={handleUpClick}>Convert to Uppercase</button>
+    <button disabled={text.length ===0} className={`btn btn-${props.btnColor} mx-1 my-1`} onClick={handleLowClick}>Convert to Lowercase</button>
+    <button disabled={text.length ===0} className={`btn btn-${props.btnColor} mx-1 my-1`} onClick={handleSpeakClick}>Read Text</button>
+    <button disabled={text.length ===0} className={`btn btn-${props.btnColor} mx-1 my-1`} onClick={handleRemovePunctuationClick}>Remove Punctuations</button>
+    <button disabled={text.length ===0} className={`btn btn-${props.btnColor} mx-1 my-1`} onClick={handleCopy}>Copy Text</button>
+    <button disabled={text.length ===0} className={`btn btn-${props.btnColor} mx-1 my-1`} onClick={handleClear}>Clear Text</button>
     </div>
     <div className="container mt-5" style={{color: props.mode==='light'?'black':'white'}}>
         <h2>Your Text Summary</h2>
-        <p><b>{wordCounter()}</b> words and <b>{text.length}</b> Characters</p>
-        <p><b>{0.008 * text.split(" ").length}</b> minutes to read this for an average person</p>
+        <p><b>{text.split(/\s+/).filter((element) => element.length !== 0).length}</b> words and <b>{text.length}</b> characters</p>
+        <p><b>{0.008 *  text.split(/\s+/).filter((element)=>{return element.length!==0}).length}</b> minutes to read this for an average person</p>
         <h2>Preview</h2>
-        <p>{text.length === 0?'Please enter your text to see the preview here':text}</p>
+        <p>{text.length === 0?'Nothing to preview':text}</p>
     </div>
     </>
   )
